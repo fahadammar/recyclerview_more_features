@@ -23,6 +23,6 @@ class MainActivity : AppCompatActivity() {
             MainViewModelFactory(applicationContext)
         )[MainViewModel::class.java]
 
-        mainViewModel.setRecycler(mainBinding.recyclerview)
+        mainViewModel.setRecycler(mainBinding.recyclerview, this)
     }
 }
