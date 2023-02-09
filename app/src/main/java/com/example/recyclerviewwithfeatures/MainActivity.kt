@@ -9,7 +9,7 @@ import com.example.recyclerviewwithfeatures.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainBinding : ActivityMainBinding
+    lateinit var mainBinding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
 
         // creating the instance of the view model
-        mainViewModel = ViewModelProvider(this, MainViewModelFactory(applicationContext))[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(applicationContext)
+        )[MainViewModel::class.java]
 
+        mainViewModel.setRecycler(mainBinding.recyclerview)
     }
 }

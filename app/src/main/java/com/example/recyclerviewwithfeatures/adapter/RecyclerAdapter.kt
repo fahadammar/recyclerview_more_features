@@ -9,7 +9,8 @@ import com.example.recyclerviewwithfeatures.model.NewsModel
 
 class RecyclerAdapter(private val context: Context, private val data: ArrayList<NewsModel>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>() {
-    class ViewHolderClass(binding: ListLayoutBinding, listener : OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolderClass(binding: ListLayoutBinding, listener: OnItemClickListener) :
+        RecyclerView.ViewHolder(binding.root) {
         val image = binding.titleImage
         val text = binding.showText
 
@@ -21,12 +22,13 @@ class RecyclerAdapter(private val context: Context, private val data: ArrayList<
         }
     }
 
-    private lateinit var interfaceInstance : OnItemClickListener
+    private lateinit var interfaceInstance: OnItemClickListener
+
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         interfaceInstance = onItemClickListener
     }
 
