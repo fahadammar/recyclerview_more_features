@@ -1,6 +1,7 @@
 package com.example.recyclerviewwithfeatures.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,23 @@ class RecyclerAdapter(private val context: Context, private val data: ArrayList<
         interfaceInstance = onItemClickListener
     }
 
+    fun deleteItem(index: Int) {
+        Log.d(TAG, "deleteItem: The FIRST-Index is --> ${data.size}")
+        data.removeAt(index)
+        Log.d(TAG, "deleteItem: The Index is --> ${data.size}")
+        notifyDataSetChanged()
+    }
+
+    fun addItem(index: Int, news: NewsModel) {
+        Log.d(TAG, "addItem: The Index is --> $index")
+        data.add(index,news)
+        notifyDataSetChanged()
+        /**
+         * Using this above add with the index, we add at the last, because the size counts starts from 1
+         * so if on another way, if we simply use the add(), it will the element at the last index of the array
+         * */
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val binding = ListLayoutBinding.inflate(
             LayoutInflater.from(context),
@@ -50,4 +68,6 @@ class RecyclerAdapter(private val context: Context, private val data: ArrayList<
     override fun getItemCount(): Int {
         return data.size
     }
+
+    val TAG = "RecyclerAdapter"
 }

@@ -4,7 +4,6 @@ import com.example.recyclerviewwithfeatures.R
 
 class NewsRepository {
     companion object {
-        private var arrayList = ArrayList<NewsModel>()
         private var heading = arrayOf(
             "Biden aims to expand vaccines for adults and children",
             "Just got my first shot, helping the world to be a safer place",
@@ -42,6 +41,18 @@ class NewsRepository {
             R.drawable.i,
         )
 
+        private var arrayList: ArrayList<NewsModel> = arrayListOf(
+            NewsModel(newsImage[0], heading[0]),
+            NewsModel(newsImage[1], heading[1]),
+            NewsModel(newsImage[2], heading[2]),
+            NewsModel(newsImage[3], heading[3]),
+            NewsModel(newsImage[4], heading[4]),
+            NewsModel(newsImage[5], heading[5]),
+            NewsModel(newsImage[6], heading[6]),
+            NewsModel(newsImage[7], heading[7]),
+            NewsModel(newsImage[8], heading[8])
+        )
+
         fun getHeading(index: Int): String {
             return heading[index]
         }
@@ -55,17 +66,11 @@ class NewsRepository {
         }
 
         fun getNews(): ArrayList<NewsModel> {
-            arrayList.add(NewsModel(newsImage[0], heading[0]))
-            arrayList.add(NewsModel(newsImage[1], heading[1]))
-            arrayList.add(NewsModel(newsImage[2], heading[2]))
-            arrayList.add(NewsModel(newsImage[3], heading[3]))
-            arrayList.add(NewsModel(newsImage[4], heading[4]))
-            arrayList.add(NewsModel(newsImage[5], heading[5]))
-            arrayList.add(NewsModel(newsImage[6], heading[6]))
-            arrayList.add(NewsModel(newsImage[7], heading[7]))
-            arrayList.add(NewsModel(newsImage[8], heading[8]))
-
             return arrayList
+        }
+
+        fun getEachNews(index: Int): NewsModel {
+            return arrayList[index]
         }
     }
 }

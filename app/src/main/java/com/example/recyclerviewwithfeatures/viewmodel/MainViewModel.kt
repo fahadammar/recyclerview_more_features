@@ -7,9 +7,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewwithfeatures.NewsActivity
+import com.example.recyclerviewwithfeatures.SwipeGestures
 import com.example.recyclerviewwithfeatures.adapter.RecyclerAdapter
 import com.example.recyclerviewwithfeatures.model.NewsRepository
 
@@ -43,5 +45,28 @@ class MainViewModel(val context: Context) : ViewModel() {
                 activity.startActivity(intent)
             }
         })
+
+        swipeGestures(recyclerView)
     }
+
+    private fun swipeGestures(recyclerView: RecyclerView) {
+        val newsArrayList = NewsRepository.getNews()
+        val swipeGestures = object : SwipeGestures(context) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                when (direction) {
+                    ItemTouchHelper.RIGHT -> {
+                        val archiveItem = newsArrayList[viewHolder.adapterPosition]
+                        adapter.deleteItem(viewHolder.adapterPosition)
+                        adapter.addItem(newsArrayList.size, archiveItem)
+                    }
+                    ItemTouchHelper.LEFT -> {
+                        adapter.deleteItem(viewHolder.adapterPosition)
+                    }
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeGestures)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
 }
