@@ -14,6 +14,7 @@ import com.example.recyclerviewwithfeatures.NewsActivity
 import com.example.recyclerviewwithfeatures.SwipeGestures
 import com.example.recyclerviewwithfeatures.adapter.RecyclerAdapter
 import com.example.recyclerviewwithfeatures.model.NewsRepository
+import java.util.*
 
 class MainViewModel(val context: Context) : ViewModel() {
     val TAG = "mainViewModelTAG"
@@ -52,6 +53,20 @@ class MainViewModel(val context: Context) : ViewModel() {
     private fun swipeGestures(recyclerView: RecyclerView) {
         val newsArrayList = NewsRepository.getNews()
         val swipeGestures = object : SwipeGestures(context) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                Log.d(TAG, "onMove: BEFORE --> $newsArrayList")
+                val from_pos = viewHolder.adapterPosition
+                val to_pos = target.adapterPosition
+                Collections.swap(newsArrayList, from_pos, to_pos)
+                adapter.notifyItemMoved(from_pos, to_pos)
+                Log.d(TAG, "onMove: AFTER --> $newsArrayList")
+                return false
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.RIGHT -> {

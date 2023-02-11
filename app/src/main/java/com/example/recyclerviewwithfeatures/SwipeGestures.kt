@@ -9,20 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 abstract class SwipeGestures(context: Context) :
-    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
 
     val deleteColor = ContextCompat.getColor(context, R.color.deleteColor)
     val archiveColor = ContextCompat.getColor(context, R.color.archiveColor)
     val deleteIcon = R.drawable.ic_baseline_delete_24
     val archiveIcon = R.drawable.ic_baseline_archive_24
-
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ): Boolean {
-        return false
-    }
 
     override fun onChildDraw(
         c: Canvas,
