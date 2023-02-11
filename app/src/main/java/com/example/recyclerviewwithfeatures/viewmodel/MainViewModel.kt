@@ -4,8 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewwithfeatures.NewsActivity
 import com.example.recyclerviewwithfeatures.SwipeGestures
 import com.example.recyclerviewwithfeatures.adapter.RecyclerAdapter
+import com.example.recyclerviewwithfeatures.model.NewsModel
 import com.example.recyclerviewwithfeatures.model.NewsRepository
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainViewModel(val context: Context) : ViewModel() {
     val TAG = "mainViewModelTAG"
+    private lateinit var tempArrayList: ArrayList<NewsModel>
+    val newsArrayList = NewsRepository.getNews()
 
-    private val adapter = RecyclerAdapter(
-        context,
-        NewsRepository.getNews()
-    )
+    private val adapter = returnAdapter()
 
     fun setRecycler(recyclerView: RecyclerView, activity: Activity) {
         recyclerView.setHasFixedSize(true)
@@ -51,7 +51,6 @@ class MainViewModel(val context: Context) : ViewModel() {
     }
 
     private fun swipeGestures(recyclerView: RecyclerView) {
-        val newsArrayList = NewsRepository.getNews()
         val swipeGestures = object : SwipeGestures(context) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -84,4 +83,38 @@ class MainViewModel(val context: Context) : ViewModel() {
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
+    fun searchViewCallbacks(searchView: SearchView, recyclerView: RecyclerView) {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                tempArrayList.clear()
+                val searchText = newText!!.lowercase(Locale.getDefault())
+                if (searchText.isNotEmpty()) {
+                    newsArrayList.forEach {
+                        if (it.news.lowercase(Locale.getDefault()).contains(searchText)) {
+                            tempArrayList!!.add(it)
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                } else {
+                    tempArrayList.clear()
+                    tempArrayList.addAll(newsArrayList)
+                    adapter.notifyDataSetChanged()
+                }
+                return false
+            }
+        })
+    }
+
+    private fun returnAdapter(): RecyclerAdapter {
+        tempArrayList = ArrayList()
+        tempArrayList.addAll(newsArrayList)
+        return RecyclerAdapter(
+            context,
+            tempArrayList
+        )
+    }
 }
