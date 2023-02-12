@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RecyclerViewWithFeatures</string>
-
+    <string name="ascending_text">Ascending Order</string>
+    <string name="descending_text">Descending Order</string>
     <string name="news_a">
         President Joe Biden has laid out plans to vaccinate 70% of US adults by 4 July and roll out the shots for 12- to 15-year-olds as soon as possible.
         Mr Bidens new goal includes having 160 million adults fully vaccinated by Independence Day.

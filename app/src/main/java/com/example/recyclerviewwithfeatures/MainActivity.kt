@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         mainViewModel.setRecycler(mainBinding.recyclerview, this)
+
+        buttonClicks(mainViewModel, mainBinding)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -36,5 +38,15 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.searchViewCallbacks(searchView, mainBinding.recyclerview)
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+
+    private fun buttonClicks(mainViewModel: MainViewModel, mainBinding: ActivityMainBinding) {
+        mainBinding.ascendingButton.setOnClickListener {
+            mainViewModel.ascendingSort()
+        }
+        mainBinding.descendingButton.setOnClickListener {
+            mainViewModel.descendingSort()
+        }
     }
 }

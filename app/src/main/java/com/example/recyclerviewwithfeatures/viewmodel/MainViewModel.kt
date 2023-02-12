@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -116,5 +117,27 @@ class MainViewModel(val context: Context) : ViewModel() {
             context,
             tempArrayList
         )
+    }
+
+    fun ascendingSort() {
+        if (tempArrayList.size >= 0) {
+            tempArrayList.sortBy {
+                it.news
+            }
+            adapter.notifyDataSetChanged()
+        } else {
+            Toast.makeText(context, "There is no news to sort", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun descendingSort() {
+        if (tempArrayList.size >= 0) {
+            tempArrayList.sortByDescending {
+                it.news
+            }
+            adapter.notifyDataSetChanged()
+        } else {
+            Toast.makeText(context, "There is no news to sort", Toast.LENGTH_SHORT).show()
+        }
     }
 }
